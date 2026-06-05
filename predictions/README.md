@@ -7,3 +7,5 @@ This directory is the target location for `polygeovision_predictions_328runs.tar
 - `multisplit_*_test_preds.npz`: multi-split robustness analysis
 
 Each file stores model predictions and the corresponding test image IDs. Pilot and exploratory prediction files are not included.
+
+Download DOI: https://doi.org/10.5281/zenodo.20561660

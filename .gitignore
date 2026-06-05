@@ -4,7 +4,7 @@ PlacePulse_raw.zip
 placePulse.tar.gz
 data_processed/googleviews-110802files/
 
-# generated data and downloaded artifacts
+# generated data and downloaded packages
 data_processed/*
 !data_processed/.gitkeep
 !data_processed/README.md
