@@ -141,8 +141,6 @@ python scripts/data_preparation/07_image_complexity.py
 
 ## Citation
 
-If you use the prediction or metadata packages, please cite the Zenodo record:
+The manuscript citation will be added after publication.
 
-```text
-https://doi.org/10.5281/zenodo.20561660
-```
+For now, the prediction and metadata packages can be cited through the Zenodo DOI listed above.
