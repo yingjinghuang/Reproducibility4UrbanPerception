@@ -1,0 +1,42 @@
+# raw / externally hosted data
+placePulse/
+PlacePulse_raw.zip
+placePulse.tar.gz
+data_processed/googleviews-110802files/
+
+# generated data and downloaded artifacts
+data_processed/*
+!data_processed/.gitkeep
+!data_processed/README.md
+predictions/*
+!predictions/.gitkeep
+!predictions/README.md
+figures/*
+!figures/.gitkeep
+checkpoints/*
+!checkpoints/.gitkeep
+runs/*
+!runs/.gitkeep
+logs/
+wandb/
+
+# caches
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# environments
+.env
+.venv/
+venv/
+
+# editor / OS
+.DS_Store
+.vscode/
+.idea/
+*.swp
+*.swo

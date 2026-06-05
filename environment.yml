@@ -1,0 +1,15 @@
+name: perception_stable
+channels:
+  - defaults
+dependencies:
+  - python=3.11
+  - pip
+  - pip:
+      - -r requirements.txt
+# Notes:
+# - PyTorch 2.11 + cu128 required for sm_120 (Blackwell RTX PRO 6000) support.
+# - Install via: pip install torch torchvision --index-url https://download.pytorch.org/whl/cu128
+# - Then: pip install -r requirements.txt
+# Reproduce:
+#   conda env create -f environment.yml
+#   conda activate perception_stable
