@@ -1,6 +1,10 @@
 # Investigating the Multi-Scale Reproducibility of GeoAI Models for Urban Perception
 
+> **Accepted as a full paper at ACM SIGSPATIAL 2026.** The final proceedings citation, paper DOI, and page range are forthcoming.
+
 This repository is the public reproducibility companion for the SIGSPATIAL study, "Investigating the Multi-Scale Reproducibility of GeoAI Models for Urban Perception."
+
+Project page: [yingjinghuang.github.io/Reproducibility4UrbanPerception](https://yingjinghuang.github.io/Reproducibility4UrbanPerception/)
 
 It contains the portable training pipeline, analysis and figure scripts, and instructions for the accompanying data packages. Raw Place Pulse 2.0 imagery, manuscript source files, trained model checkpoints, and generated release archives are intentionally kept outside this Git repository.
 
@@ -191,6 +195,20 @@ python -m compileall -q src scripts
 
 ## Citation
 
-The manuscript citation will be added after publication.
+The final ACM citation will be added after the proceedings metadata becomes available. Until then, use the following provisional citation:
+
+```bibtex
+@inproceedings{huang2026multiscale,
+  author    = {Yingjing Huang and Krzysztof Janowicz and Mina Karimi and
+               Zilong Liu and Songling Wang and Annika Suess and
+               Alexandra Fortacz-Lazan},
+  title     = {Investigating the Multi-Scale Reproducibility of {GeoAI}
+               Models for Urban Perception},
+  booktitle = {Proceedings of the 34th ACM SIGSPATIAL International
+               Conference on Advances in Geographic Information Systems},
+  year      = {2026},
+  note      = {Accepted full paper; DOI forthcoming}
+}
+```
 
 For now, the prediction and metadata packages can be cited through the Zenodo DOI listed above.

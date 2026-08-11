@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#173b3a">
+    <meta
+      name="description"
+      content="Project page for the ACM SIGSPATIAL 2026 full paper on multi-scale reproducibility in GeoAI models for urban perception."
+    >
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Multi-Scale Reproducibility in GeoAI">
+    <meta
+      property="og:description"
+      content="A model can look stable globally while remaining unstable for individual places and images."
+    >
+    <meta
+      property="og:url"
+      content="https://yingjinghuang.github.io/Reproducibility4UrbanPerception/"
+    >
+    <meta
+      property="og:image"
+      content="https://yingjinghuang.github.io/Reproducibility4UrbanPerception/assets/scale-ladder.png"
+    >
+    <title>Multi-Scale Reproducibility in GeoAI</title>
+    <link rel="icon" href="assets/mark.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="assets/styles.css">
+    <script defer src="assets/site.js"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#content">Skip to content</a>
+
+    <header class="site-header" data-header>
+      <nav class="nav shell" aria-label="Primary navigation">
+        <a class="brand" href="#top" aria-label="Project home">
+          <img src="assets/mark.svg" alt="" width="36" height="36">
+          <span>Scale / Stability</span>
+        </a>
+        <div class="nav-links">
+          <a href="#findings">Findings</a>
+          <a href="#figures">Figures</a>
+          <a href="#reproduce">Reproduce</a>
+          <a href="#cite">Cite</a>
+        </div>
+        <a
+          class="button button-small button-ghost"
+          href="https://github.com/yingjinghuang/Reproducibility4UrbanPerception"
+        >
+          View code
+          <span aria-hidden="true">↗</span>
+        </a>
+      </nav>
+    </header>
+
+    <main id="content">
+      <section class="hero" id="top">
+        <div class="hero-grid shell">
+          <div class="hero-copy reveal">
+            <p class="eyebrow">
+              <span class="status-dot" aria-hidden="true"></span>
+              Accepted full paper · ACM SIGSPATIAL 2026
+            </p>
+            <h1>
+              Reproducibility<br>
+              changes with
+              <span>scale.</span>
+            </h1>
+            <p class="hero-deck">
+              Investigating the Multi-Scale Reproducibility of GeoAI Models
+              for Urban Perception
+            </p>
+            <p class="hero-summary">
+              Global averages can make a model look reliable while its
+              predictions remain highly unstable for individual places and
+              street-view images. We measure that gap across 328 training
+              runs, three vision architectures, and five spatial scales.
+            </p>
+            <p class="authors">
+              Yingjing Huang, Krzysztof Janowicz, Mina Karimi, Zilong Liu,
+              Songling Wang, Annika Suess &amp; Alexandra Fortacz-Lazan
+              <span>University of Vienna</span>
+            </p>
+            <div class="hero-actions">
+              <a class="button button-primary" href="#findings">
+                Explore the findings
+                <span aria-hidden="true">↓</span>
+              </a>
+              <a
+                class="button button-secondary"
+                href="https://doi.org/10.5281/zenodo.20561660"
+              >
+                Data on Zenodo
+                <span aria-hidden="true">↗</span>
+              </a>
+            </div>
+            <p class="publication-note">
+              Proceedings citation and paper DOI are forthcoming.
+              <a href="#cite">Use the provisional citation</a>.
+            </p>
+          </div>
+
+          <div class="hero-visual reveal" aria-label="Variability grows as evaluation moves from aggregate to image scale">
+            <div class="scale-orbit">
+              <div class="orbit orbit-1"><span>Aggregate</span></div>
+              <div class="orbit orbit-2"><span>Continent</span></div>
+              <div class="orbit orbit-3"><span>Country</span></div>
+              <div class="orbit orbit-4"><span>Place</span></div>
+              <div class="orbit-core">
+                <span>Image scale</span>
+                <strong>12–27%</strong>
+                <small>seed-induced variability</small>
+              </div>
+              <div class="aggregate-callout">
+                <span>Global scale</span>
+                <strong>&lt; 2.5%</strong>
+              </div>
+            </div>
+            <p class="orbit-caption">
+              The same trained models. Five evaluation scales.
+              Radically different stability verdicts.
+            </p>
+          </div>
+        </div>
+
+        <div class="metric-bar shell reveal" aria-label="Study at a glance">
+          <div><strong>328</strong><span>training runs</span></div>
+          <div><strong>3</strong><span>architectures</span></div>
+          <div><strong>5</strong><span>spatial scales</span></div>
+          <div><strong>70</strong><span>core places</span></div>
+        </div>
+      </section>
+
+      <section class="section thesis-section" id="findings">
+        <div class="shell">
+          <div class="section-heading reveal">
+            <p class="kicker">The central result</p>
+            <h2>A single reproducibility number hides the local seed lottery.</h2>
+            <p>
+              At aggregate scale, every architecture appears comfortably
+              stable. Disaggregation reveals an order-of-magnitude increase
+              in variability—and even reverses the stability ordering of
+              ResNet-50 and ViT-B/16.
+            </p>
+          </div>
+
+          <figure class="hero-figure reveal">
+            <div class="figure-frame">
+              <img
+                src="assets/scale-ladder.png"
+                alt="Line and box plots showing seed-induced relative standard deviation increasing from aggregate to image scale for ResNet, ViT, and DINOv2"
+                width="1259"
+                height="675"
+                loading="lazy"
+              >
+            </div>
+            <figcaption>
+              <span>Figure 1</span>
+              Median seed-induced relative standard deviation across nested
+              spatial scales. The dotted line is the independent-error
+              reference anchored at image scale.
+            </figcaption>
+          </figure>
+
+          <div class="finding-grid">
+            <article class="finding-card reveal">
+              <span class="card-index">01</span>
+              <p class="card-stat">12–27%</p>
+              <h3>Local instability is substantial</h3>
+              <p>
+                Per-image variability is roughly an order of magnitude larger
+                than the aggregate metric, despite using the exact same model
+                predictions.
+              </p>
+            </article>
+            <article class="finding-card reveal">
+              <span class="card-index">02</span>
+              <p class="card-stat">10–26%</p>
+              <h3>Variance has geographic structure</h3>
+              <p>
+                A meaningful share of seed-induced variance is organized by
+                continent, country, and place—not merely left as image-level
+                noise.
+              </p>
+            </article>
+            <article class="finding-card reveal">
+              <span class="card-index">03</span>
+              <p class="card-stat">4 / 4 / 16</p>
+              <h3>Seed budgets are architecture-specific</h3>
+              <p>
+                ResNet-50 and DINOv2 need four seeds to stabilize all core
+                places at the 10% threshold; ViT-B/16 needs sixteen.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section figure-section" id="figures">
+        <div class="shell">
+          <div class="section-heading compact reveal">
+            <p class="kicker">What the scale reveals</p>
+            <h2>Instability is both spatially structured and actionable.</h2>
+          </div>
+
+          <div class="figure-grid">
+            <figure class="figure-card figure-card-tall reveal">
+              <div class="figure-image">
+                <img
+                  src="assets/variance-decomposition.png"
+                  alt="Variance decomposition bars and rankings of place-level instability across ResNet, ViT, and DINOv2"
+                  width="1880"
+                  height="1403"
+                  loading="lazy"
+                >
+              </div>
+              <figcaption>
+                <span>Geographic structure</span>
+                The place level consistently forms the largest geographic
+                component, while instability rankings vary by architecture.
+              </figcaption>
+            </figure>
+
+            <div class="figure-side">
+              <figure class="figure-card reveal">
+                <div class="figure-image figure-image-wide">
+                  <img
+                    src="assets/ensembling.png"
+                    alt="Two plots showing lower variability and higher place coverage as ensemble size increases"
+                    width="1934"
+                    height="754"
+                    loading="lazy"
+                  >
+                </div>
+                <figcaption>
+                  <span>A practical mitigation</span>
+                  Ensembling reduces variance near the expected
+                  1/√<i>N</i> rate, but the required seed budget differs sharply
+                  across architectures.
+                </figcaption>
+              </figure>
+
+              <blockquote class="pull-quote reveal">
+                <p>
+                  “Reproducibility in GeoAI is not a single property, but a
+                  family of properties indexed by evaluation scale.”
+                </p>
+              </blockquote>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section reproduce-section" id="reproduce">
+        <div class="shell reproduce-grid">
+          <div class="section-heading reveal">
+            <p class="kicker">Open reproducibility package</p>
+            <h2>Inspect the evidence, not just the headline.</h2>
+            <p>
+              The public release includes portable data preparation,
+              training, analysis, and figure-generation code. Prediction and
+              metadata packages are distributed separately to keep the code
+              repository lightweight.
+            </p>
+            <div class="inline-actions">
+              <a
+                class="button button-primary"
+                href="https://github.com/yingjinghuang/Reproducibility4UrbanPerception"
+              >
+                Browse repository <span aria-hidden="true">↗</span>
+              </a>
+              <a
+                class="text-link"
+                href="https://doi.org/10.5281/zenodo.20561660"
+              >
+                Download data packages <span aria-hidden="true">↗</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="reproduce-card reveal">
+            <div class="terminal-bar">
+              <span></span><span></span><span></span>
+              <p>Quick start</p>
+            </div>
+            <pre><code><span class="prompt">$</span> git clone https://github.com/yingjinghuang/Reproducibility4UrbanPerception.git
+
+<span class="prompt">$</span> cd Reproducibility4UrbanPerception
+<span class="prompt">$</span> conda env create -f environment.yml
+<span class="prompt">$</span> conda activate perception_stable
+
+<span class="prompt">$</span> python scripts/analysis/12_tier1_variance.py
+<span class="prompt">$</span> python scripts/figures/15_figures.py</code></pre>
+            <div class="pipeline" aria-label="Reproduction pipeline">
+              <span>Prepare</span><i>→</i>
+              <span>Train</span><i>→</i>
+              <span>Analyze</span><i>→</i>
+              <span>Visualize</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section citation-section" id="cite">
+        <div class="shell citation-grid">
+          <div class="section-heading reveal">
+            <p class="kicker">Citation</p>
+            <h2>Accepted; proceedings metadata forthcoming.</h2>
+            <p>
+              The paper has been accepted as a full paper at ACM SIGSPATIAL
+              2026. The provisional citation below provides a stable
+              placeholder until ACM publishes the proceedings DOI and final
+              bibliographic details.
+            </p>
+            <div class="citation-status">
+              <span>Pending update</span>
+              Paper DOI · page range · proceedings URL
+            </div>
+          </div>
+
+          <div class="citation-card reveal">
+            <div class="citation-topline">
+              <span>BibTeX · provisional</span>
+              <button type="button" data-copy-citation>Copy citation</button>
+            </div>
+            <pre id="citation-text"><code>@inproceedings{huang2026multiscale,
+  author    = {Yingjing Huang and Krzysztof Janowicz and
+               Mina Karimi and Zilong Liu and Songling Wang and
+               Annika Suess and Alexandra Fortacz-Lazan},
+  title     = {Investigating the Multi-Scale Reproducibility
+               of {GeoAI} Models for Urban Perception},
+  booktitle = {Proceedings of the 34th ACM SIGSPATIAL
+               International Conference on Advances in
+               Geographic Information Systems},
+  year      = {2026},
+  note      = {Accepted full paper; DOI forthcoming}
+}</code></pre>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="shell footer-grid">
+        <div>
+          <a class="brand footer-brand" href="#top">
+            <img src="assets/mark.svg" alt="" width="32" height="32">
+            <span>Scale / Stability</span>
+          </a>
+          <p>Multi-scale reproducibility for trustworthy GeoAI.</p>
+        </div>
+        <div class="footer-links">
+          <a href="https://github.com/yingjinghuang/Reproducibility4UrbanPerception">GitHub</a>
+          <a href="https://doi.org/10.5281/zenodo.20561660">Zenodo</a>
+          <a href="#cite">Citation</a>
+        </div>
+        <p class="footer-meta">
+          University of Vienna · ACM SIGSPATIAL 2026
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>
