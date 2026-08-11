@@ -189,6 +189,16 @@ To verify that all released Python files parse without running the experiments:
 python -m compileall -q src scripts
 ```
 
+## Building the Zenodo Packages
+
+The package selection and integrity checks are automated so local pilot files are not accidentally published:
+
+```bash
+python scripts/package_zenodo.py
+```
+
+See [ZENODO.md](ZENODO.md) for the development-layout command, generated file manifest, checksum verification, and upload checklist.
+
 ## Citation
 
 The manuscript citation will be added after publication.
