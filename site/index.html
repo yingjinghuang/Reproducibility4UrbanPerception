@@ -55,20 +55,15 @@
     <main id="content">
       <section class="hero" id="top">
         <div class="hero-grid shell">
-          <div class="hero-copy reveal">
+          <div class="reveal">
             <p class="eyebrow">
               <span class="status-dot" aria-hidden="true"></span>
               Accepted full paper · ACM SIGSPATIAL 2026
             </p>
             <h1>
-              Reproducibility<br>
-              changes with
-              <span>scale.</span>
+              Investigating the Multi-Scale Reproducibility of
+              <span>GeoAI Models</span> for Urban Perception
             </h1>
-            <p class="hero-deck">
-              Investigating the Multi-Scale Reproducibility of GeoAI Models
-              for Urban Perception
-            </p>
             <p class="hero-summary">
               Global averages can make a model look reliable while its
               predictions remain highly unstable for individual places and
@@ -99,26 +94,20 @@
             </p>
           </div>
 
-          <div class="hero-visual reveal" aria-label="Variability grows as evaluation moves from aggregate to image scale">
-            <div class="scale-orbit">
-              <div class="orbit orbit-1"><span>Aggregate</span></div>
-              <div class="orbit orbit-2"><span>Continent</span></div>
-              <div class="orbit orbit-3"><span>Country</span></div>
-              <div class="orbit orbit-4"><span>Place</span></div>
-              <div class="orbit-core">
-                <span>Image scale</span>
-                <strong>12–27%</strong>
-                <small>seed-induced variability</small>
-              </div>
-              <div class="aggregate-callout">
-                <span>Global scale</span>
-                <strong>&lt; 2.5%</strong>
-              </div>
+          <aside class="study-card reveal" aria-label="Study overview">
+            <p class="study-card-label">Study overview</p>
+            <dl>
+              <div><dt>Models</dt><dd>ResNet-50, ViT-B/16, DINOv2</dd></div>
+              <div><dt>Evaluation</dt><dd>Aggregate → continent → country → place → image</dd></div>
+              <div><dt>Global variability</dt><dd>&lt; 2.5%</dd></div>
+              <div><dt>Image-scale variability</dt><dd>12–27%</dd></div>
+            </dl>
+            <div class="study-takeaway">
+              <strong>Key takeaway</strong>
+              A model that appears stable in aggregate can remain unstable at
+              the scale where its predictions are actually used.
             </div>
-            <p class="orbit-caption">
-              The same trained models. Five evaluation scales.
-              Radically different stability verdicts.
-            </p>
+          </aside>
           </div>
         </div>
 
@@ -197,13 +186,13 @@
 
       <section class="section figure-section" id="figures">
         <div class="shell">
-          <div class="section-heading compact reveal">
+          <div class="section-heading reveal">
             <p class="kicker">What the scale reveals</p>
             <h2>Instability is both spatially structured and actionable.</h2>
           </div>
 
           <div class="figure-grid">
-            <figure class="figure-card figure-card-tall reveal">
+            <figure class="figure-card reveal">
               <div class="figure-image">
                 <img
                   src="assets/variance-decomposition.png"
@@ -222,7 +211,7 @@
 
             <div class="figure-side">
               <figure class="figure-card reveal">
-                <div class="figure-image figure-image-wide">
+                <div class="figure-image">
                   <img
                     src="assets/ensembling.png"
                     alt="Two plots showing lower variability and higher place coverage as ensemble size increases"
