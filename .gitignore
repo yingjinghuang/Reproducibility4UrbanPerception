@@ -6,7 +6,6 @@ data_processed/googleviews-110802files/
 
 # downloadable release packages
 polygeovision_*.tar.gz
-release_assets/
 
 # generated data and downloaded packages
 data_processed/*
