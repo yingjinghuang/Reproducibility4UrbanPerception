@@ -1,8 +1,33 @@
 # Investigating the Multi-Scale Reproducibility of GeoAI Models for Urban Perception
 
-This repository provides the code and data-package instructions for the SIGSPATIAL study, "Investigating the Multi-Scale Reproducibility of GeoAI Models for Urban Perception."
+This repository is the public reproducibility companion for the SIGSPATIAL study, "Investigating the Multi-Scale Reproducibility of GeoAI Models for Urban Perception."
 
-The release contains the training pipeline, evaluation scripts, figure-generation code, and instructions for using the accompanying prediction and metadata packages. Raw Place Pulse 2.0 imagery, manuscript source files, and trained model checkpoints are not included.
+It contains the portable training pipeline, analysis and figure scripts, and instructions for the accompanying data packages. Raw Place Pulse 2.0 imagery, manuscript source files, trained model checkpoints, and generated release archives are intentionally kept outside this Git repository.
+
+## Quick Start
+
+Clone the code and create the recorded Python 3.11 environment:
+
+```bash
+git clone https://github.com/yingjinghuang/Reproducibility4UrbanPerception.git
+cd Reproducibility4UrbanPerception
+conda env create -f environment.yml
+conda activate perception_stable
+```
+
+Download the two data packages from Zenodo into the repository root, then unpack them:
+
+```bash
+tar -xzf polygeovision_predictions_328runs.tar.gz
+tar -xzf polygeovision_metadata.tar.gz
+```
+
+The archives populate `predictions/` and `data_processed/`. The archive files and extracted data are ignored by Git. A first analysis or figure can then be run from the repository root:
+
+```bash
+python scripts/analysis/12_tier1_variance.py
+python scripts/figures/15_figures.py
+```
 
 ## Data Packages
 
@@ -12,8 +37,10 @@ Zenodo DOI: [10.5281/zenodo.20561660](https://doi.org/10.5281/zenodo.20561660)
 
 The release uses two downloadable packages:
 
-- `polygeovision_predictions_328runs.tar.gz`: per-seed test predictions for the 328 reported training runs.
-- `polygeovision_metadata.tar.gz`: derived metadata and analysis tables used by the evaluation scripts.
+| Package | Extracts to | Purpose |
+| --- | --- | --- |
+| `polygeovision_predictions_328runs.tar.gz` | `predictions/` | Per-seed test predictions for the 328 reported training runs |
+| `polygeovision_metadata.tar.gz` | `data_processed/` | Derived metadata and analysis tables used by the evaluation scripts |
 
 Place both files in the repository root and unpack them:
 
@@ -32,6 +59,17 @@ After unpacking, `data_processed/` contains the derived inputs needed for analys
 
 Raw Place Pulse 2.0 imagery is not redistributed. To rerun the full pipeline from raw data, obtain Place Pulse 2.0 from the official source and place it in the expected local layout.
 
+## Reproduction Workflow
+
+The numbered script names preserve their provenance from the research workflow; the directories group them by task.
+
+| Stage | Code | Required inputs | Main outputs |
+| --- | --- | --- | --- |
+| Data preparation | `scripts/data_preparation/` | Raw Place Pulse 2.0 data | Tables in `data_processed/` |
+| Training | `scripts/training/` and `src/polygeo/` | Prepared tables and raw imagery | Predictions, run summaries, and checkpoints |
+| Analysis | `scripts/analysis/` | Released predictions and metadata | Stability and robustness tables |
+| Figures | `scripts/figures/` | Released or regenerated analysis tables | PDF and PNG files in `figures/` |
+
 ## Repository Layout
 
 ```text
@@ -47,11 +85,11 @@ Raw Place Pulse 2.0 imagery is not redistributed. To rerun the full pipeline fro
 ├── figures/                     generated figures
 ├── checkpoints/                 local output directory for trained model weights
 ├── runs/                        local output directory for run logs and summaries
-├── environment.yml
-└── requirements.txt
+├── environment.yml              conda entry point (Python 3.11)
+└── requirements.txt             pinned full environment
 ```
 
-`checkpoints/`, `runs/`, and `figures/` are local output directories. They are ignored by git except for placeholder files.
+`data_processed/`, `predictions/`, `checkpoints/`, `runs/`, and `figures/` contain downloaded or generated artifacts. They are ignored by Git except for documentation and placeholder files.
 
 ## Environment
 
@@ -65,8 +103,12 @@ conda activate perception_stable
 Alternatively, install from `requirements.txt`:
 
 ```bash
+python -m venv .venv
+source .venv/bin/activate
 python -m pip install -r requirements.txt
 ```
+
+`requirements.txt` records the full CUDA 12.8 training environment and includes the PyTorch CUDA package index. Analysis scripts themselves do not train models, but using the recorded environment keeps the numerical stack consistent with the study.
 
 Paths are resolved relative to the repository root by default. If running scripts from another working directory, set:
 
@@ -137,6 +179,14 @@ python scripts/data_preparation/04_label_dispersion.py
 python scripts/data_preparation/05_make_splits.py
 python scripts/data_preparation/06_smoke_test_dataloader.py
 python scripts/data_preparation/07_image_complexity.py
+```
+
+## Repository Check
+
+To verify that all released Python files parse without running the experiments:
+
+```bash
+python -m compileall -q src scripts
 ```
 
 ## Citation

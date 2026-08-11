@@ -4,6 +4,9 @@ PlacePulse_raw.zip
 placePulse.tar.gz
 data_processed/googleviews-110802files/
 
+# downloadable release packages
+polygeovision_*.tar.gz
+
 # generated data and downloaded packages
 data_processed/*
 !data_processed/.gitkeep

@@ -108,7 +108,7 @@ def main() -> None:
         "k:",
         linewidth=1.2,
         alpha=0.6,
-        label="1/sqrt(N) reference\n(from image scale)",
+        label=r"$1/\sqrt{n}$ reference" + "\n(from image scale)",
     )
 
     ax.set_xticks(x_scale)

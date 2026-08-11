@@ -7,9 +7,8 @@ dependencies:
   - pip:
       - -r requirements.txt
 # Notes:
-# - PyTorch 2.11 + cu128 required for sm_120 (Blackwell RTX PRO 6000) support.
-# - Install via: pip install torch torchvision --index-url https://download.pytorch.org/whl/cu128
-# - Then: pip install -r requirements.txt
+# - requirements.txt records the full CUDA 12.8 environment used for training.
+# - The PyTorch CUDA wheels require the PyTorch package index; see README.md.
 # Reproduce:
 #   conda env create -f environment.yml
 #   conda activate perception_stable
