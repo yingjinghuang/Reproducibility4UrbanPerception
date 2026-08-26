@@ -1,16 +1,17 @@
-"""Build canonical train/val/test split.
+"""Build the canonical train/validation/test split.
 
-Stratified by city_proxy (so all cities appear in test). Held identical across
-all seed runs of the project — split itself is generated once with a fixed
-seed and never re-shuffled.
+The split is stratified by city_proxy so that sufficiently large cities are
+represented in each partition. It is generated once with a fixed seed and held
+constant across all training runs.
 
 Output:
   data_processed/splits.parquet   columns: image_id, split ∈ {train, val, test}
 
 Strategy:
-  - For each city_proxy, take ⌈max(1, 0.10·N)⌉ images for test, same for val,
-    rest for train. Cities with N<3 → all images go to test (no train signal anyway).
-  - Use a fixed numpy RandomState(seed=20260503) for image ordering within city.
+  - For each city_proxy, assign ceil(max(1, 0.10*N)) images to test and the same
+    number to validation, with the remainder assigned to training. Cities with
+    fewer than three images are assigned entirely to test.
+  - Use numpy RandomState(seed=20260503) for image ordering within each city.
 """
 from pathlib import Path
 import numpy as np
@@ -30,7 +31,6 @@ def main() -> None:
     geo = pd.read_parquet(GEO)
     qs = pd.read_parquet(QSCORES)
 
-    # Only keep images that have at least one TrueSkill rating in any dimension
     rated = qs["image_id"].unique()
     geo = geo[geo["image_id"].isin(rated)].copy()
     print(f"images with ≥1 TrueSkill rating: {len(geo):,}")
@@ -62,7 +62,6 @@ def main() -> None:
     print(splits["split"].value_counts().to_string())
     print()
 
-    # Sanity: continent / global_south distribution per split
     merged = splits.merge(geo, on="image_id", how="left")
     print("per-continent counts by split:")
     print(merged.groupby(["continent", "split"]).size().unstack(fill_value=0).to_string())
