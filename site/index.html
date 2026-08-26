@@ -72,7 +72,7 @@
             </p>
             <p class="authors">
               Yingjing Huang, Krzysztof Janowicz, Mina Karimi, Zilong Liu,
-              Songling Wang, Annika Suess &amp; Alexandra Fortacz-Lazan
+              Songlin Wang, Annika Suess &amp; Alexandra Fortacz-Lazan
               <span>University of Vienna</span>
             </p>
             <div class="hero-actions">
@@ -89,8 +89,9 @@
               </a>
             </div>
             <p class="publication-note">
-              Proceedings citation and paper DOI are forthcoming.
-              <a href="#cite">Use the provisional citation</a>.
+              Paper DOI:
+              <a href="https://doi.org/10.1145/3841645.3842976">10.1145/3841645.3842976</a>.
+              Final page range forthcoming.
             </p>
           </div>
 
@@ -173,11 +174,12 @@
             </article>
             <article class="finding-card reveal">
               <span class="card-index">03</span>
-              <p class="card-stat">4 / 4 / 16</p>
+              <p class="card-stat">4 / 8 / 16</p>
               <h3>Seed budgets are architecture-specific</h3>
               <p>
-                ResNet-50 and DINOv2 need four seeds to stabilize all core
-                places at the 10% threshold; ViT-B/16 needs sixteen.
+                ResNet-50, DINOv2, and ViT-B/16 need four, eight, and sixteen
+                seeds, respectively, to stabilize all core places at the 10%
+                threshold on the tested ensemble-size grid.
               </p>
             </article>
           </div>
@@ -247,8 +249,10 @@
             <p>
               The public release includes portable data preparation,
               training, analysis, and figure-generation code. Prediction and
-              metadata packages are distributed separately to keep the code
-              repository lightweight.
+              metadata packages are registered separately on Zenodo to keep
+              the code repository lightweight; the Zenodo record is public
+              while the files are currently restricted during final
+              camera-ready release preparation.
             </p>
             <div class="inline-actions">
               <a
@@ -261,7 +265,7 @@
                 class="text-link"
                 href="https://doi.org/10.5281/zenodo.20561660"
               >
-                Download data packages <span aria-hidden="true">↗</span>
+                Zenodo data record <span aria-hidden="true">↗</span>
               </a>
             </div>
           </div>
@@ -293,16 +297,16 @@
         <div class="shell citation-grid">
           <div class="section-heading reveal">
             <p class="kicker">Citation</p>
-            <h2>Accepted; proceedings metadata forthcoming.</h2>
+            <h2>Accepted; final page range forthcoming.</h2>
             <p>
               The paper has been accepted as a full paper at ACM SIGSPATIAL
-              2026. The provisional citation below provides a stable
-              placeholder until ACM publishes the proceedings DOI and final
-              bibliographic details.
+              2026 and has been assigned DOI 10.1145/3841645.3842976. The
+              remaining final proceedings metadata will be added when it is
+              available.
             </p>
             <div class="citation-status">
               <span>Pending update</span>
-              Paper DOI · page range · proceedings URL
+              Page range · proceedings URL
             </div>
           </div>
 
@@ -313,15 +317,14 @@
             </div>
             <pre id="citation-text"><code>@inproceedings{huang2026multiscale,
   author    = {Yingjing Huang and Krzysztof Janowicz and
-               Mina Karimi and Zilong Liu and Songling Wang and
+               Mina Karimi and Zilong Liu and Songlin Wang and
                Annika Suess and Alexandra Fortacz-Lazan},
   title     = {Investigating the Multi-Scale Reproducibility
                of {GeoAI} Models for Urban Perception},
-  booktitle = {Proceedings of the 34th ACM SIGSPATIAL
-               International Conference on Advances in
-               Geographic Information Systems},
+  booktitle = {The 34th ACM International Conference on Advances in
+               Geographic Information Systems (SIGSPATIAL '26)},
   year      = {2026},
-  note      = {Accepted full paper; DOI forthcoming}
+  doi       = {10.1145/3841645.3842976}
 }</code></pre>
           </div>
         </div>
@@ -340,6 +343,7 @@
         <div class="footer-links">
           <a href="https://github.com/yingjinghuang/Reproducibility4UrbanPerception">GitHub</a>
           <a href="https://doi.org/10.5281/zenodo.20561660">Zenodo</a>
+          <a href="https://doi.org/10.1145/3841645.3842976">Paper DOI</a>
           <a href="#cite">Citation</a>
         </div>
         <p class="footer-meta">
