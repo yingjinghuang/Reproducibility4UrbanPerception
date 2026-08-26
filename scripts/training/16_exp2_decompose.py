@@ -5,11 +5,8 @@ Three groups, 20 runs each (60 total):
   Group B "data":           data_seed varies (0..19), init_seed=0, aug_seed=0
   Group C "aug":            aug_seed varies (0..19), init_seed=0, data_seed=0
 
-Run (init_seed=0, data_seed=0, aug_seed=0) is shared across groups
-(it's the "all zero" reference). It serves as a duplicate check that the
-seeding plumbing is consistent.
-
-Estimated cost: 60 × 0.162 GPU-h ≈ 10 GPU-h on Blackwell.
+Run (init_seed=0, data_seed=0, aug_seed=0) is shared across groups as the
+reference run and provides a duplicate check for the seeding implementation.
 Restartable: skips runs whose summary.json already exists.
 """
 from __future__ import annotations
@@ -65,7 +62,7 @@ def main() -> None:
             lr=defaults["lr"],
             weight_decay=defaults.get("weight_decay", 0.05),
             run_name=run_name,
-            save_checkpoint=False,    # don't waste 14 GB on this; we only need preds
+            save_checkpoint=False,
             save_predictions=True,
         )
         print(f"\n>>> {run_name} ({n_done}/{len(plan)} done, {n_skipped} skipped)")
