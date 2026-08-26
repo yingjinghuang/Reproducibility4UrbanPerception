@@ -39,7 +39,7 @@ python scripts/figures/15_figures.py
 
 The per-seed predictions and derived metadata are distributed separately from the git repository to keep the repository lightweight.
 
-Zenodo DOI: [10.5281/zenodo.20561660](https://doi.org/10.5281/zenodo.20561660)
+Zenodo concept DOI: [10.5281/zenodo.20561659](https://doi.org/10.5281/zenodo.20561659)
 
 The release is organized into two packages:
 
