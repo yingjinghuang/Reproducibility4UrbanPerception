@@ -5,16 +5,16 @@ Run plan:
   - ViT-B/16  (full FT, 6 epochs, batch 64,  lr 3e-5):     seeds 0..79  (80)
   - DINOv2 frozen + MLP head (10 epochs, batch 128, 1e-3): seeds 0..39  (40)
 
-All hyperparameters are FROZEN (per-architecture defaults from polygeo.train).
-The only thing that varies between runs is the master `seed`, which controls:
-  weight init, data shuffle order, augmentation RNG, dropout RNG.
+All hyperparameters are fixed to the per-architecture defaults in polygeo.train.
+Only the master seed varies between runs; it controls weight initialization,
+data shuffling, augmentation randomness, and dropout randomness.
 
 Each run saves:
   - runs/{run_name}/{config.json, train_log.csv, summary.json}
   - checkpoints/{run_name}.pt
   - predictions/{run_name}_test_preds.npz
 
-The launcher is restartable: any run with summary.json present is skipped.
+The launcher is restartable: runs with an existing summary.json are skipped.
 """
 from __future__ import annotations
 import sys
@@ -31,7 +31,6 @@ from polygeo.paths import RUNS, ROOT
 
 
 SWEEP_PLAN = [
-    # (arch, init, n_seeds)
     ("resnet50", "imagenet21k", 40),
     ("vit_b16", "imagenet21k", 80),
     ("dinov2_frozen", "imagenet21k", 40),
@@ -81,9 +80,7 @@ def main() -> None:
                 run_dir.mkdir(parents=True, exist_ok=True)
                 (run_dir / "FAILED.txt").write_text(repr(e))
                 n_failed += 1
-                # don't raise — continue with other seeds; failures are tabulated at end
 
-    # --- per-arch rollup ---
     print("\n=== Exp 1 sweep summary ===")
     by_arch = {}
     for row in summary_rows:
