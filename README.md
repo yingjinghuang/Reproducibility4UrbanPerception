@@ -1,6 +1,6 @@
 # Investigating the Multi-Scale Reproducibility of GeoAI Models for Urban Perception
 
-> **Accepted as a full paper at ACM SIGSPATIAL 2026.** The final proceedings citation, paper DOI, and page range are forthcoming.
+> **Accepted as a full paper at ACM SIGSPATIAL 2026.** Paper DOI: [10.1145/3841645.3842976](https://doi.org/10.1145/3841645.3842976). The final proceedings page range is forthcoming.
 
 This repository is the public reproducibility companion for the SIGSPATIAL study, "Investigating the Multi-Scale Reproducibility of GeoAI Models for Urban Perception."
 
@@ -19,7 +19,9 @@ conda env create -f environment.yml
 conda activate perception_stable
 ```
 
-Download the two data packages from Zenodo into the repository root, then unpack them:
+The two accompanying data packages are registered on Zenodo. The record is public, while the files are currently restricted during final camera-ready release preparation.
+
+Once the files are publicly accessible, place them in the repository root and unpack them:
 
 ```bash
 tar -xzf polygeovision_predictions_328runs.tar.gz
@@ -39,14 +41,14 @@ The per-seed predictions and derived metadata are distributed separately from th
 
 Zenodo DOI: [10.5281/zenodo.20561660](https://doi.org/10.5281/zenodo.20561660)
 
-The release uses two downloadable packages:
+The release is organized into two packages:
 
 | Package | Extracts to | Purpose |
 | --- | --- | --- |
 | `polygeovision_predictions_328runs.tar.gz` | `predictions/` | Per-seed test predictions for the 328 reported training runs |
 | `polygeovision_metadata.tar.gz` | `data_processed/` | Derived metadata and analysis tables used by the evaluation scripts |
 
-Place both files in the repository root and unpack them:
+After downloading both files, place them in the repository root and unpack them:
 
 ```bash
 tar -xzf polygeovision_predictions_328runs.tar.gz
@@ -195,20 +197,20 @@ python -m compileall -q src scripts
 
 ## Citation
 
-The final ACM citation will be added after the proceedings metadata becomes available. Until then, use the following provisional citation:
+The ACM paper DOI has been assigned. The page range will be added when the final proceedings metadata is available.
 
 ```bibtex
 @inproceedings{huang2026multiscale,
   author    = {Yingjing Huang and Krzysztof Janowicz and Mina Karimi and
-               Zilong Liu and Songling Wang and Annika Suess and
+               Zilong Liu and Songlin Wang and Annika Suess and
                Alexandra Fortacz-Lazan},
   title     = {Investigating the Multi-Scale Reproducibility of {GeoAI}
                Models for Urban Perception},
-  booktitle = {Proceedings of the 34th ACM SIGSPATIAL International
-               Conference on Advances in Geographic Information Systems},
+  booktitle = {The 34th ACM International Conference on Advances in
+               Geographic Information Systems (SIGSPATIAL '26)},
   year      = {2026},
-  note      = {Accepted full paper; DOI forthcoming}
+  doi       = {10.1145/3841645.3842976}
 }
 ```
 
-For now, the prediction and metadata packages can be cited through the Zenodo DOI listed above.
+The prediction and metadata packages can be cited through the Zenodo DOI listed above.
