@@ -46,7 +46,7 @@ The release is organized into two packages:
 | Package | Extracts to | Purpose |
 | --- | --- | --- |
 | `polygeovision_predictions_328runs.tar.gz` | `predictions/` | Per-seed test predictions for the 328 reported training runs |
-| `polygeovision_metadata.tar.gz` | `data_processed/` | Derived metadata and analysis tables used by the evaluation scripts |
+| `polygeovision_metadata.tar.gz` | `data_processed/` | 35 paper-facing metadata and analysis files used by the evaluation scripts |
 
 After downloading both files, place them in the repository root and unpack them:
 
