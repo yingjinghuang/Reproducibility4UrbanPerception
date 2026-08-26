@@ -1,17 +1,13 @@
-"""Compute three image complexity proxies for all images (D9).
+"""Compute three image complexity proxies for all images.
 
 Proxies:
-  1. shannon_entropy   — Shannon entropy of grayscale histogram (256 bins).
-                         Cheap; captures texture / variance.
-  2. dino_feat_norm    — L2 norm of DINOv2 ViT-B/14 [CLS] embedding (frozen).
-                         Captures "scene richness" in the foundation-model embedding space.
-  3. seg_diversity     — Number of distinct semantic classes & Gini diversity from
-                         SegFormer-B0 finetuned on ADE20K (150 classes).
-                         Captures scene-content heterogeneity.
+  1. shannon_entropy   — Shannon entropy of grayscale histogram (256 bins),
+                         capturing texture and intensity variation.
+  2. dino_feat_norm    — L2 norm of the frozen DINOv2 ViT-B/14 [CLS] embedding.
+  3. seg_diversity     — Number of distinct semantic classes and Gini diversity
+                         from SegFormer-B0 fine-tuned on ADE20K (150 classes).
 
 Output: data_processed/image_complexity.parquet
-
-Runs DINO + SegFormer on GPU 0. ~5-10 minutes for 110K images at batch 64 on RTX 6000.
 """
 from __future__ import annotations
 import sys
@@ -62,7 +58,7 @@ def main() -> None:
     geo = geo[geo["exists"]].reset_index(drop=True)
     print(f"computing complexity on {len(geo):,} images")
 
-    # ---- Pass 1: shannon entropy (CPU, parallel via DataLoader) ----
+    # ---- Pass 1: Shannon entropy ----
     print("\n=== shannon entropy ===")
     t0 = time.time()
     ent_tfm = transforms.Compose([
@@ -75,7 +71,7 @@ def main() -> None:
             img = Image.open(path).convert("L")
             img = ent_tfm(img)
             return np.asarray(img, dtype=np.uint8)
-        except (OSError, Image.DecompressionBombError) as e:
+        except (OSError, Image.DecompressionBombError):
             return None
 
     entropies = np.full(len(geo), np.nan, dtype=np.float32)
@@ -111,7 +107,7 @@ def main() -> None:
             if bi % 100 == 0:
                 print(f"  batch {bi}/{len(loader)}  ({time.time()-t0:.1f}s)")
             out = dino(pixel_values=imgs.to(DEVICE, non_blocking=True))
-            cls = out.last_hidden_state[:, 0]  # [B, hidden]
+            cls = out.last_hidden_state[:, 0]
             norms = cls.norm(p=2, dim=1).float().cpu().numpy()
             dino_norms[idxs.numpy()] = norms
     del dino
@@ -131,7 +127,7 @@ def main() -> None:
 
     ds2 = _ImageBatchDataset(geo["img_path"].tolist(), seg_tfm)
     loader2 = DataLoader(ds2, batch_size=32, shuffle=False, num_workers=NUM_WORKERS)
-    n_classes = seg.config.num_labels  # 150 for ADE20K
+    n_classes = seg.config.num_labels
     seg_n_classes = np.empty(len(geo), dtype=np.int32)
     seg_gini = np.empty(len(geo), dtype=np.float32)
     seg_entropy = np.empty(len(geo), dtype=np.float32)
@@ -139,8 +135,8 @@ def main() -> None:
         for bi, (imgs, idxs) in enumerate(loader2):
             if bi % 100 == 0:
                 print(f"  batch {bi}/{len(loader2)}  ({time.time()-t0:.1f}s)")
-            logits = seg(pixel_values=imgs.to(DEVICE, non_blocking=True)).logits  # [B, C, h, w]
-            preds = logits.argmax(dim=1)  # [B, h, w]
+            logits = seg(pixel_values=imgs.to(DEVICE, non_blocking=True)).logits
+            preds = logits.argmax(dim=1)
             B = preds.shape[0]
             preds_flat = preds.view(B, -1)
             for j in range(B):
@@ -154,7 +150,6 @@ def main() -> None:
     torch.cuda.empty_cache()
     print(f"  done in {time.time()-t0:.1f}s; mean #classes={seg_n_classes.mean():.2f}, gini={seg_gini.mean():.3f}, entropy={seg_entropy.mean():.3f}")
 
-    # ---- Output ----
     out = pd.DataFrame({
         "image_id": geo["image_id"].to_numpy(),
         "complexity_shannon": entropies,
@@ -167,7 +162,6 @@ def main() -> None:
     out.to_parquet(OUT, index=False)
     print(f"\nwrote {OUT}  ({OUT.stat().st_size/1e6:.1f} MB)")
 
-    # Cross-correlations among proxies (sanity for D9)
     cor = out[[
         "complexity_shannon",
         "complexity_dino_norm",
