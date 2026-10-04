@@ -168,16 +168,39 @@ def main() -> None:
                 "n": int(a.size),
             }
 
+        def retained_unit_summary(counts: np.ndarray, min_count: int) -> dict:
+            retained_counts = np.asarray(counts)[np.asarray(counts) >= min_count]
+            n_images_retained = int(retained_counts.sum(dtype=np.float64))
+            return {
+                "n_units": int(retained_counts.size),
+                "n_images_in_retained_units": n_images_retained,
+                "mean_images_per_retained_unit": n_images_retained / int(retained_counts.size),
+            }
+
+        image_units = {
+            "n_units": int(preds.shape[0]),
+            "n_images_in_retained_units": int(preds.shape[0]),
+            "mean_images_per_retained_unit": 1.0,
+        }
+        city_units = retained_unit_summary(city_counts, 3)
+        country_units = retained_unit_summary(cc_counts, 10)
+        continent_units = retained_unit_summary(cont_counts, 10)
+        aggregate_units = {
+            "n_units": 1,
+            "n_images_in_retained_units": int(preds.shape[0]),
+            "mean_images_per_retained_unit": float(preds.shape[0]),
+        }
+
         arch_out = {
             "n_images": int(preds.shape[0]),
             "n_seeds": int(n_seeds),
             "n_dims": n_dim,
             "ladder": {
-                "image":      {"median_rel_std": float(median_img),       "n_units": int(preds.shape[0]), "pct": pctiles(img_rel)},
-                "city":       {"median_rel_std": float(median_city),      "n_units": int((city_counts >= 3).sum()), "pct": pctiles(city_flat)},
-                "country":    {"median_rel_std": float(median_country),   "n_units": int((cc_counts >= 10).sum()), "pct": pctiles(country_flat)},
-                "continent":  {"median_rel_std": float(median_continent), "n_units": int((cont_counts >= 10).sum()), "pct": pctiles(continent_flat)},
-                "aggregate":  {"median_rel_std": float(median_agg),       "n_units": 1, "pct": pctiles(agg_flat)},
+                "image":      {"median_rel_std": float(median_img),       **image_units, "pct": pctiles(img_rel)},
+                "city":       {"median_rel_std": float(median_city),      **city_units, "pct": pctiles(city_flat)},
+                "country":    {"median_rel_std": float(median_country),   **country_units, "pct": pctiles(country_flat)},
+                "continent":  {"median_rel_std": float(median_continent), **continent_units, "pct": pctiles(continent_flat)},
+                "aggregate":  {"median_rel_std": float(median_agg),       **aggregate_units, "pct": pctiles(agg_flat)},
             },
             "dim_scale": {dims[d]: float(dim_scale[d]) for d in range(n_dim)},
         }
