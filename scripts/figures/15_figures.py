@@ -12,8 +12,9 @@ import matplotlib as mpl
 import matplotlib.font_manager as fm
 import matplotlib.pyplot as plt
 import numpy as np
+import pandas as pd
 
-from polygeo.paths import ROOT, DATA
+from polygeo.paths import ROOT, DATA, IMAGE_GEO
 
 
 FIGS = ROOT / "figures"
@@ -95,10 +96,26 @@ def main() -> None:
             zorder=5,
         )
 
-    total_images = ladder["vit_b16"]["n_images"]
+    splits = pd.read_parquet(DATA / "splits.parquet", columns=["image_id", "split"])
+    test_ids = splits.loc[splits["split"] == "test", ["image_id"]]
+    geo = pd.read_parquet(
+        IMAGE_GEO,
+        columns=["image_id", "city_proxy", "cc", "continent"],
+    )
+    test_geo = test_ids.merge(geo, on="image_id", how="left", validate="one_to_one")
+    test_geo = test_geo.dropna(subset=["city_proxy", "cc", "continent"])
+
+    def mean_images_per_retained_unit(column: str, min_count: int) -> float:
+        counts = test_geo.groupby(column, sort=False).size()
+        retained = counts[counts >= min_count]
+        return float(retained.sum() / retained.size)
+
     n_per_unit = {
-        scale: total_images / max(ladder["vit_b16"]["ladder"][scale]["n_units"], 1)
-        for scale in scale_order
+        "aggregate": float(len(test_geo)),
+        "continent": mean_images_per_retained_unit("continent", 10),
+        "country": mean_images_per_retained_unit("cc", 10),
+        "city": mean_images_per_retained_unit("city_proxy", 3),
+        "image": 1.0,
     }
     vit_image = ladder["vit_b16"]["ladder"]["image"]["median_rel_std"]
     reference = [vit_image / np.sqrt(n_per_unit[scale]) for scale in scale_order]
